@@ -6,7 +6,6 @@ public class ChatLogic {
     public String getResponse(String input) {
         String cleanInput = input.toLowerCase().trim();
 
-        // 1. GREETINGS
         if (cleanInput.contains("hi") || cleanInput.contains("hello") || cleanInput.contains("hey")) {
             String[] greetings = {
                     "Hey there! 😊",
@@ -16,7 +15,6 @@ public class ChatLogic {
             return greetings[random.nextInt(greetings.length)];
         }
 
-        // 2. WELL-BEING
         if (cleanInput.contains("how are you")) {
             String[] moods = {
                     "I'm feeling digital and fast! ⚡",
@@ -26,17 +24,14 @@ public class ChatLogic {
             return moods[random.nextInt(moods.length)];
         }
 
-        // 3. PROJECT/SQL TALK
         if (cleanInput.contains("sql") || cleanInput.contains("database")) {
             return "SQL is great! Are you working on Joins or just basic Queries? 📊";
         }
 
-        // 4. CLOSING
         if (cleanInput.contains("bye")) {
             return "Catch you later! Happy coding! 👋";
         }
 
-        // DEFAULT FALLBACK (Randomized so it doesn't sound like a broken record)
         String[] fallbacks = {
                 "I'm not sure I follow. Can you explain that differently? 🤔",
                 "That sounds interesting, but I don't have an answer for it yet!",
