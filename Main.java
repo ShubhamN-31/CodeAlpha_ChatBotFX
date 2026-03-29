@@ -17,12 +17,10 @@ public class Main extends Application {
     private ScrollPane scrollPane;
     private TextField inputField;
 
-    // Create an instance of your separate logic class
     private ChatLogic botLogic = new ChatLogic();
 
     @Override
     public void start(Stage stage) {
-        // --- 1. CHAT DISPLAY AREA ---
         chatArea = new VBox(15);
         chatArea.setPadding(new Insets(20));
 
@@ -30,7 +28,6 @@ public class Main extends Application {
         scrollPane.setFitToWidth(true);
         VBox.setVgrow(scrollPane, Priority.ALWAYS);
 
-        // --- 2. INPUT AREA ---
         inputField = new TextField();
         inputField.setPromptText("Type a message...");
         inputField.setPrefHeight(45);
@@ -40,7 +37,6 @@ public class Main extends Application {
         sendButton.setPrefSize(45, 45);
         sendButton.setCursor(javafx.scene.Cursor.HAND);
 
-        // --- 3. TOP BAR (Header) ---
         Label title = new Label("ChatBotFX Pro");
         title.setStyle("-fx-font-weight: bold; -fx-font-size: 16;");
 
@@ -48,7 +44,6 @@ public class Main extends Application {
         themeBtn.setCursor(javafx.scene.Cursor.HAND);
         themeBtn.setOnAction(e -> toggleTheme(themeBtn));
 
-        // --- Clear Chat Button ---
         Button clearBtn = new Button("🗑 Clear");
         clearBtn.setCursor(javafx.scene.Cursor.HAND);
         clearBtn.setStyle("-fx-background-color: transparent; -fx-text-fill: #888; -fx-font-size: 13;");
@@ -66,7 +61,6 @@ public class Main extends Application {
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
-        // Define topBar only ONCE and include all elements
         HBox topBar = new HBox(15, title, spacer, clearBtn, themeBtn);
         topBar.setAlignment(Pos.CENTER_LEFT);
         topBar.setPadding(new Insets(10, 15, 10, 15));
@@ -75,11 +69,9 @@ public class Main extends Application {
         inputLayout.setPadding(new Insets(15));
         inputLayout.setAlignment(Pos.CENTER);
 
-        // --- 4. EVENT HANDLING ---
         sendButton.setOnAction(e -> handleSend());
         inputField.setOnAction(e -> handleSend());
 
-        // --- 5. SETUP SCENE ---
         mainLayout = new VBox(topBar, scrollPane, inputLayout);
         applyLightTheme();
 
@@ -88,7 +80,6 @@ public class Main extends Application {
         stage.setScene(scene);
         stage.show();
 
-        // Initial greeting
         addMessage("Hello! I'm your AI assistant. How can I help you today?", false);
     }
 
@@ -99,12 +90,10 @@ public class Main extends Application {
             inputField.clear();
             inputField.requestFocus();
 
-            // 1. Show User Message
             addMessage(text, true);
 
             String response = botLogic.getResponse(text);
 
-            // 2. Typing Indicator with Dynamic Color
             String typingColor = isDarkMode ? "white" : "gray";
             Label typingLabel = new Label("Bot is typing...");
             typingLabel.setStyle("-fx-text-fill: " + typingColor + "; -fx-padding: 5; -fx-font-style: italic;");
@@ -113,7 +102,6 @@ public class Main extends Application {
             typingBox.setAlignment(Pos.CENTER_LEFT);
             chatArea.getChildren().add(typingBox);
 
-            // 3. Delay and Show Response
             PauseTransition delay = new PauseTransition(Duration.seconds(1.2));
             delay.setOnFinished(event -> {
                 chatArea.getChildren().remove(typingBox);
